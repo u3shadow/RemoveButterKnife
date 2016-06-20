@@ -1,5 +1,6 @@
 package com.u3;
 
+import com.intellij.ide.ui.AppearanceOptionsTopHitProvider;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
@@ -24,10 +25,15 @@ public class FindViewByIdWriter extends  WriteCommandAction.Simple {
     }
 
     @Override
-    protected void run() throws Throwable {
-        generateInjects(mProject);
+    protected void run(){
+        try {
+            generateInjects(mProject);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     protected void generateInjects(Project mProject) {
+        try {
         PsiClass activityClass = JavaPsiFacade.getInstance(mProject).findClass(
                 "android.app.Activity", new EverythingGlobalScope(mProject));
         PsiClass fragmentClass = JavaPsiFacade.getInstance(mProject).findClass(
@@ -36,7 +42,7 @@ public class FindViewByIdWriter extends  WriteCommandAction.Simple {
                 "android.support.v4.app.Fragment", new EverythingGlobalScope(mProject));
 
         // Check for Activity class
-        try {
+
             PsiMethod onCreate = mClass.findMethodsByName("onCreate", false)[0];
             for (PsiStatement statement : onCreate.getBody().getStatements()) {
                 // Search for setContentView()
@@ -56,28 +62,25 @@ public class FindViewByIdWriter extends  WriteCommandAction.Simple {
             }
             // Check for Fragment class
         } catch (Exception e){
-            e.printStackTrace();
+
             PsiMethod onCreateView = mClass.findMethodsByName("onCreateView", false)[0];
             for (PsiStatement statement : onCreateView.getBody().getStatements()) {
-                if (statement instanceof PsiReturnStatement) {
-                    String returnValue = ((PsiReturnStatement) statement).getReturnValue().getText();
+                    String returnValue = statement.getText();
                     if (returnValue.contains("R.layout")) {
-                        onCreateView.getBody().addBefore(mFactory.createStatementFromText("android.view.View view = " + returnValue + ";", mClass), statement);
+                        String viewName = returnValue.trim().split(" ")[1]+".";
                         for (int i = 0; i < code.size(); i++) {
-                            onCreateView.getBody().addBefore(mFactory.createStatementFromText(
-                                    code.get(i), mClass), statement);
+                            StringBuffer buffer = new StringBuffer(code.get(i));
+                            int num = buffer.indexOf(")");
+                            buffer.insert(num+1,viewName);
+                            try {
+                                statement.addAfter(mFactory.createStatementFromText(
+                                        buffer.toString(), mClass), statement);
+                            }catch (Exception e1){}
                         }
-                        statement.replace(mFactory.createStatementFromText("return view;", mClass));
-                    } else {
-                        // Insert ButterKnife.inject()/ButterKnife.bind() before returning a view for a fragment
-                        for (int i = 0; i < code.size(); i++) {
-                            onCreateView.getBody().addBefore(mFactory.createStatementFromText(
-                                    code.get(i), mClass), statement);
-                        }
+                        break;
                     }
-                    break;
                 }
-            }
+            e.printStackTrace();
         }
     }
 }

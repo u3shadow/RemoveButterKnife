@@ -6,10 +6,7 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElementFactory;
-import com.intellij.psi.PsiFile;
+import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -39,14 +36,19 @@ public class DeleteAction extends  WriteCommandAction.Simple{
         mFactory = JavaPsiFacade.getElementFactory(project);
     }
     @Override
-    protected void run() throws Throwable {
-
-        for(int i = 0;i < tod.size();i++){
-            int deleteStart = document.getLineStartOffset(tod.get(i));
-            int deleteEnd = document.getLineEndOffset(tod.get(i));
-            document.deleteString(deleteStart,deleteEnd);
+    protected void run(){
+        try {
+            for (int i = 0; i < tod.size(); i++) {
+                int deleteStart = document.getLineStartOffset(tod.get(i));
+                int deleteEnd = document.getLineEndOffset(tod.get(i));
+                document.deleteString(deleteStart, deleteEnd);
+            }
+            PsiDocumentManager manager = PsiDocumentManager.getInstance(project);
+            manager.commitDocument(document);
+            createFindViewByIdCode();
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        createFindViewByIdCode();
     }
     List<String> code;
     private void createFindViewByIdCode(){
@@ -56,6 +58,10 @@ public class DeleteAction extends  WriteCommandAction.Simple{
             codes = entry.getKey() + "findViewById("+entry.getValue()+");";
             code.add(codes);
         }
-        new FindViewByIdWriter(project,file,mClass,code,mFactory).execute();
+        try {
+            new FindViewByIdWriter(project, file, mClass, code, mFactory).execute();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

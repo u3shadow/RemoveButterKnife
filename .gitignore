@@ -1,0 +1,9 @@
+.idea/vcs.xml
+.idea/workspace.xml
+module_plugintest.xml
+out/production/plugintest/META-INF/plugin.xml
+out/production/plugintest/com/u3/DeleteAction.class
+out/production/plugintest/com/u3/FindViewByIdWriter.class
+out/production/plugintest/com/u3/MainAction.class
+plugintest.jar
+plugintest.properties

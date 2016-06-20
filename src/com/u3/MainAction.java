@@ -38,6 +38,7 @@ public class MainAction extends BaseGenerateAction {
     @Override
     public void actionPerformed(AnActionEvent event) {
         // TODO: insert action logic here
+        try {
         project = event.getData(PlatformDataKeys.PROJECT);
         Editor editor = event.getData(PlatformDataKeys.EDITOR);
          file = PsiUtilBase.getPsiFileInEditor(editor, project);
@@ -52,6 +53,9 @@ public class MainAction extends BaseGenerateAction {
         deleteButterKnife();
         deleteAnnotationAndGetIdName();
         new DeleteAction(project,file,document,tod,nameidmap,mClass).execute();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     private void deleteImport() {
         //delete import
