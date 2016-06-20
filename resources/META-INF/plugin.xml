@@ -1,8 +1,8 @@
 <idea-plugin version="2">
-  <id>com.your.company.unique.plugin.id</id>
-  <name>Plugin display name here</name>
+  <id>com.u3coding.removebutterknife</id>
+  <name>RemoveButterKnife</name>
   <version>1.0</version>
-  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+  <vendor email="u3coding@gmail.com" url="about:blank">u3coding</vendor>
 
   <description><![CDATA[
       Enter short description for your plugin here.<br>
@@ -30,8 +30,8 @@
 
   <actions>
     <!-- Add your actions here -->
-    <action id="TestTranslate.TranslateAction" class="com.u3.MainAction" text="Translate"
-            description="translate word">
+    <action id="u3shadow.RemoveButterKnife" class="com.u3.MainAction" text="RemoveButterKnife"
+            description="Remove ButterKnife from activity/fragments">
       <add-to-group group-id="EditMenu" anchor="first"/>
       <keyboard-shortcut keymap="$default" first-keystroke="BACK_QUOTE" second-keystroke="BACK_SLASH"/>
     </action>
