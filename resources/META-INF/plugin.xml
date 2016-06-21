@@ -4,15 +4,30 @@
   <version>1.0</version>
   <vendor email="u3coding@gmail.com" url="about:blank">u3coding</vendor>
 
-  <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
-    ]]></description>
+  <description>
+    What's the plugin
 
-  <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
-    ]]>
+    An Android Studio plugin to help remove use of ButterKnife
+
+
+    Why i do this
+
+    ButterKnife is a wellknow open source tool to help you inject your view, but some times, you use plugin to gen butterknife's code, but you don't want to use it again.
+    It's a very horrible job to delete every line inject code and write findviewbyid code, so, i made this plugin to do it.
+
+
+    How to use it
+
+    1.Clone the code and build it in your idea
+
+    2.Then, you can find a jar, install it as a plugin in your AndroidStudio(You also can find the jar in the project)
+
+    3.Open your Activity/Fragment you want to change.
+
+    4.Find the RemoveButterKnife button in your android studio edit menu
+  </description>
+
+  <change-notes>
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
