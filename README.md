@@ -20,3 +20,5 @@ It's a very horrible job to delete every line inject code and write findviewbyid
 
 ![](http://www.u3coding.com/wp-content/uploads/2016/06/1.gif)
 
+## License
+See the LICENSE file for license rights and limitations(GNU3.0)
