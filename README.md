@@ -10,6 +10,7 @@ don't want to use it again.
 It's a very horrible job to delete every line inject code and write findviewbyid code, so, i made this plugin to do it.
 
 ## How to use it
+(You can search it on your AS plugin install page, name is RemoveButterKnife)
 1.Clone the code and build it in your  idea
 
 2.Then, you can find a jar, install it as a plugin in your AndroidStudio**(You also can find the jar in the project)**
