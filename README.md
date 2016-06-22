@@ -1,5 +1,5 @@
 # RemoveButterKnife
-
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-RemoveButterKnife-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/3750)
 ## What's the plugin
 An Android Studio plugin to help remove use of ButterKnife
 
