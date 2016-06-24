@@ -59,9 +59,10 @@ public class MainAction extends BaseGenerateAction {
     private void deleteImport() {
         //delete import
         String is1 = "import butterknife.Bind;";
+        String is3 = "import butterknife.InjectView;";
         String is2 = "import butterknife.ButterKnife;";
         for (int i = 0;i < s1.length;i++){
-            if (s1[i].equals(is1)||s1[i].equals(is2)){
+            if (s1[i].equals(is1)||s1[i].equals(is2)||s1[i].equals(is3)){
               tod.add(i);
             }
         }
