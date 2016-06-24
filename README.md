@@ -22,5 +22,9 @@ It's a very horrible job to delete every line inject code and write findviewbyid
 
 ![](http://www.u3coding.com/wp-content/uploads/2016/06/1.gif)
 
+## The idea of how to design and implement it
+You can see this bloa(Chinese version, english version will come later)
+[This link](http://www.u3coding.com/2016/06/24/androidstudio-plugin-removebutterknife-di/)
+
 ## License
 See the LICENSE file for license rights and limitations(GNU3.0)
