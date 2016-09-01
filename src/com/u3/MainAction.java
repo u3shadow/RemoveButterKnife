@@ -61,8 +61,9 @@ public class MainAction extends BaseGenerateAction {
         String is1 = "import butterknife.Bind;";
         String is3 = "import butterknife.InjectView;";
         String is2 = "import butterknife.ButterKnife;";
+        String is4 =  "import butterknife.BindView;";
         for (int i = 0;i < s1.length;i++){
-            if (s1[i].equals(is1)||s1[i].equals(is2)||s1[i].equals(is3)){
+            if (s1[i].equals(is1)||s1[i].equals(is2)||s1[i].equals(is3)||s1[i].equals(is4)){
               tod.add(i);
             }
         }
