@@ -9,10 +9,7 @@ import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by xiaolei on 2016/6/17.
@@ -24,7 +21,7 @@ public class DeleteAction extends  WriteCommandAction.Simple{
     PsiClass mClass;
     private PsiElementFactory mFactory;
     Document document;
-    Map<String,String> nameidmap = new HashMap<>();
+    Map<String,String> nameidmap = new LinkedHashMap<>();
     public DeleteAction(Project project, PsiFile file,Document document, List<Integer> tod,Map<String,String> map,PsiClass psiClass){
         super(project, file);
         this.document = document;

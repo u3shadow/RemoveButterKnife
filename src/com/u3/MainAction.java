@@ -45,7 +45,7 @@ public class MainAction extends BaseGenerateAction {
         mClass = getTargetClass(editor,file);
         tod = new ArrayList<>();
         Document document = editor.getDocument();
-        nameidmap = new HashMap<>();
+        nameidmap = new LinkedHashMap<>();
         String s = document.getText();
         s1 = s.split("\n");
         deleteImport();
