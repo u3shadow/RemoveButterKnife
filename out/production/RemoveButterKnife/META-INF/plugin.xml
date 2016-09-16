@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.u3coding.removebutterknife</id>
   <name>RemoveButterKnife</name>
-  <version>1.1.2</version>
+  <version>1.2.0</version>
   <vendor email="u3coding@gmail.com" url="about:blank">u3coding</vendor>
 
   <description>
@@ -29,6 +29,12 @@
   </description>
 
   <change-notes>
+    <![CDATA[
+    <html>
+   <h1>What's new</h1>
+   <br>Can keep the view order after remove butterknife.</br>
+    </html>
+     ]]>
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
