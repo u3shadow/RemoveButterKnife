@@ -7,7 +7,7 @@ public class FindAPIUseChain extends BaseChain{
     @Override
     public void process() {
     for (int i = 0; i < currentDoc.length; i++) {
-            if (currentDoc[i].trim().indexOf(BUTTER_KNIFE) == 0) {
+            if (currentDoc[i] != null&&currentDoc[i].trim().indexOf(BUTTER_KNIFE) == 0) {
                 deleteLineNumbers.add(i);
             }
         }
