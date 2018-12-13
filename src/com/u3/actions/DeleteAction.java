@@ -1,9 +1,10 @@
-package com.u3;
+package com.u3.actions;
 
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
+import com.u3.codegenerator.FindViewByIdWriter;
 
 import java.util.*;
 import java.util.regex.Matcher;

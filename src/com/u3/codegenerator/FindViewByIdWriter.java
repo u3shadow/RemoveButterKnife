@@ -1,4 +1,4 @@
-package com.u3;
+package com.u3.codegenerator;
 
 import com.intellij.ide.ui.AppearanceOptionsTopHitProvider;
 import com.intellij.openapi.command.WriteCommandAction;
@@ -16,7 +16,7 @@ public class FindViewByIdWriter extends  WriteCommandAction.Simple {
     private PsiElementFactory mFactory;
     List<String> code;
     Project mProject;
-    protected FindViewByIdWriter(Project project, PsiFile file, PsiClass psiClass, List<String> code, PsiElementFactory mFactory) {
+    public FindViewByIdWriter(Project project, PsiFile file, PsiClass psiClass, List<String> code, PsiElementFactory mFactory) {
         super(project, file);
         mClass = psiClass;
         this.code = code;

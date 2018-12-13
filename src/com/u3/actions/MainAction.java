@@ -1,4 +1,4 @@
-package com.u3;
+package com.u3.actions;
 
 import com.intellij.codeInsight.CodeInsightActionHandler;
 import com.intellij.codeInsight.generation.actions.BaseGenerateAction;
@@ -7,13 +7,8 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.wm.impl.SystemDock;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiUtilBase;
-
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by xiaolei on 2016/6/14.

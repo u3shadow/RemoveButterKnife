@@ -52,7 +52,7 @@
 
   <actions>
     <!-- Add your actions here -->
-    <action id="u3shadow.RemoveButterKnife" class="com.u3.MainAction" text="RemoveButterKnife"
+    <action id="u3shadow.RemoveButterKnife" class="com.u3.actions.MainAction" text="RemoveButterKnife"
             description="Remove ButterKnife from activity/fragments">
       <add-to-group group-id="EditMenu" anchor="first"/>
       <keyboard-shortcut keymap="$default" first-keystroke="BACK_QUOTE" second-keystroke="BACK_SLASH"/>
