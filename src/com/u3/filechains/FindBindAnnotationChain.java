@@ -3,7 +3,7 @@ package com.u3.filechains;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class FindBindAnnotationChain extends BaseChain {
+public class FindBindAnnotationChain extends BaseChain {
     @Override
     public void process() {
         String pattern = "^@(BindView|InjectView|Bind)\\(R.id.*\\)$";

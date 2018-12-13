@@ -1,6 +1,6 @@
 package com.u3.filechains;
 
-class FindImportChain extends BaseChain{
+public class FindImportChain extends BaseChain{
 
     public static final String IMPORT_BUTTERKNIFE_BIND = "import butterknife.Bind;";
     public static final String IMPORT_BUTTERKNIFE_INJECT_VIEW = "import butterknife.InjectView;";
