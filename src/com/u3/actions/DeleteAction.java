@@ -10,6 +10,7 @@ import com.u3.filechains.DeleteCodeChain;
 import com.u3.filechains.FindAPIUseChain;
 import com.u3.filechains.FindBindAnnotationChain;
 import com.u3.filechains.FindImportChain;
+import com.u3.filechains.GeneratCodeChain;
 
 import java.util.*;
 
@@ -17,15 +18,16 @@ import java.util.*;
  * Created by xiaolei on 2016/6/17.
  */
 public class DeleteAction extends  WriteCommandAction.Simple{
-    List<Integer> deleteLineNumbers;
     Project project;
     PsiFile file;
     String[] currentDoc;
     PsiClass mClass;
     private PsiElementFactory mFactory;
     Document document;
-    Map<String,String> nameAndIdMap = new LinkedHashMap<>();
-    BaseChain findAPIChain, findBindChain, findImportChain,deleteChain;
+    private Map<String,String> nameAndIdMap = new LinkedHashMap<>();
+    private BaseChain findAPIChain, findBindChain, findImportChain,deleteChain,genCodeChain;
+    private List code = new ArrayList();
+    private List<Integer> deleteLineNumbers = new ArrayList<>();
 
     public DeleteAction(Project project, PsiFile file,Document document, PsiClass psiClass){
         super(project, file);
@@ -35,32 +37,22 @@ public class DeleteAction extends  WriteCommandAction.Simple{
         this.file = file;
         this.mClass = psiClass;
         mFactory = JavaPsiFacade.getElementFactory(project);
-        deleteLineNumbers = new ArrayList<>();
     }
     @Override
     protected void run(){
-        try {
             findImportChain = new FindImportChain();
             findBindChain = new FindBindAnnotationChain();
             findAPIChain = new FindAPIUseChain();
             deleteChain = new DeleteCodeChain(document,project);
+            genCodeChain = new GeneratCodeChain(code);
             findImportChain.setNext(findBindChain);
             findBindChain.setNext(findAPIChain);
             findAPIChain.setNext(deleteChain);
+            deleteChain.setNext(genCodeChain);
             findImportChain.handle(currentDoc,deleteLineNumbers,nameAndIdMap);
             createFindViewByIdCode();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
-    List<String> code;
     private void createFindViewByIdCode(){
-        code = new ArrayList<>();
-        for (Map.Entry<String,String> entry:nameAndIdMap.entrySet()){
-            String codes;
-            codes = entry.getKey() + "findViewById("+entry.getValue()+");";
-            code.add(codes);
-        }
         try {
             new FindViewByIdWriter(project, file, mClass, code, mFactory).execute();
         }catch (Exception e){
