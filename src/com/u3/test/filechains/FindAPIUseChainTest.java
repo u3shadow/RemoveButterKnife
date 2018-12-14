@@ -18,7 +18,7 @@ public class FindAPIUseChainTest extends BaseTest{
     public void test_with_api_use() {
         currentDoc[0] = "NotUseApi();";
         currentDoc[1] = "ButterKnife.useApi();";
-        chain.handle(currentDoc,deleteLineNumbers,nameAndIdMap,typeAndNameMap);
+        chain.handle(currentDoc,deleteLineNumbers,nameAndIdMap);
         int expect = 1;
         int result = deleteLineNumbers.size();
         assertEquals(expect,result);
@@ -27,7 +27,7 @@ public class FindAPIUseChainTest extends BaseTest{
     public void test_without_api_use() {
         currentDoc[0] = "NotUseApi();";
         currentDoc[1] = "";
-        chain.handle(currentDoc,deleteLineNumbers,nameAndIdMap,typeAndNameMap);
+        chain.handle(currentDoc,deleteLineNumbers,nameAndIdMap);
         int expect = 0;
         int result = deleteLineNumbers.size();
         assertEquals(expect,result);

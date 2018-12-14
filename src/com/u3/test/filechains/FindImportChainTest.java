@@ -20,7 +20,7 @@ public class FindImportChainTest extends BaseTest{
         currentDoc = new String[2];
         currentDoc[0] = "import butterknife.Bind;";
         currentDoc[1] = "";
-        chain.handle(currentDoc,deleteLineNumbers,nameAndIdMap,typeAndNameMap);
+        chain.handle(currentDoc,deleteLineNumbers,nameAndIdMap);
         int expect = 0;
         int result = deleteLineNumbers.get(0);
         assertEquals(expect,result);
@@ -30,7 +30,7 @@ public class FindImportChainTest extends BaseTest{
         currentDoc = new String[2];
         currentDoc[0] = "NotUseApi();";
         currentDoc[1] = "";
-        chain.handle(currentDoc,deleteLineNumbers,nameAndIdMap,typeAndNameMap);
+        chain.handle(currentDoc,deleteLineNumbers,nameAndIdMap);
         int expect = 0;
         int result = deleteLineNumbers.size();
         assertEquals(expect,result);

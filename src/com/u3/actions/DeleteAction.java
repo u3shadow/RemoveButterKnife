@@ -9,7 +9,6 @@ import com.u3.filechains.BaseChain;
 import com.u3.filechains.FindAPIUseChain;
 import com.u3.filechains.FindBindAnnotationChain;
 import com.u3.filechains.FindImportChain;
-import com.u3.filechains.GetViewStatementMapChain;
 
 import java.util.*;
 
@@ -25,8 +24,7 @@ public class DeleteAction extends  WriteCommandAction.Simple{
     private PsiElementFactory mFactory;
     Document document;
     Map<String,String> nameAndIdMap = new LinkedHashMap<>();
-    Map<Integer,String> typeAndNameMap = new LinkedHashMap<>();
-    BaseChain findAPIChain, findBindChain, findImportChain, getViewStatementChain;
+    BaseChain findAPIChain, findBindChain, findImportChain;
 
     public DeleteAction(Project project, PsiFile file,Document document, PsiClass psiClass){
         super(project, file);
@@ -43,17 +41,10 @@ public class DeleteAction extends  WriteCommandAction.Simple{
         try {
             findImportChain = new FindImportChain();
             findBindChain = new FindBindAnnotationChain();
-            getViewStatementChain = new GetViewStatementMapChain();
             findAPIChain = new FindAPIUseChain();
             findImportChain.setNext(findBindChain);
-            findBindChain.setNext(getViewStatementChain);
-            getViewStatementChain.setNext(findAPIChain);
-            findImportChain.handle(currentDoc,deleteLineNumbers,nameAndIdMap,typeAndNameMap);
-            for (Map.Entry<Integer,String> entry:typeAndNameMap.entrySet()){
-                int deleteStart = document.getLineStartOffset(entry.getKey());
-                int deleteEnd = document.getLineEndOffset(entry.getKey());
-                document.replaceString(deleteStart, deleteEnd,"\t"+entry.getValue()+";");
-            }
+            findBindChain.setNext(findAPIChain);
+            findImportChain.handle(currentDoc,deleteLineNumbers,nameAndIdMap);
             for (int i = 0; i < deleteLineNumbers.size(); i++) {
                 int deleteStart = document.getLineStartOffset(deleteLineNumbers.get(i));
                 int deleteEnd = document.getLineEndOffset(deleteLineNumbers.get(i));

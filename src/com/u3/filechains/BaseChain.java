@@ -8,14 +8,12 @@ public abstract class BaseChain {
    protected String[] currentDoc;
    protected List deleteLineNumbers;
    protected Map<String,String> nameAndIdMap;
-   protected Map<Integer,String> typeAndNameMap;
    public void setNext(BaseChain next){
       this.next = next;
    }
-    final public void handle(String[] currentDoc,List deleteLineNumbers,Map nameAndIdMap,Map typeAndNameMap){
+    final public void handle(String[] currentDoc,List deleteLineNumbers,Map nameAndIdMap){
         this.deleteLineNumbers = deleteLineNumbers;
         this.nameAndIdMap = nameAndIdMap;
-        this.typeAndNameMap = typeAndNameMap;
         this.currentDoc = currentDoc;
         process();
         dispatcher();
@@ -23,7 +21,7 @@ public abstract class BaseChain {
     abstract public void process();
     private void dispatcher(){
         if(next != null) {
-            next.handle(currentDoc, deleteLineNumbers, nameAndIdMap, typeAndNameMap);
+            next.handle(currentDoc, deleteLineNumbers, nameAndIdMap);
         }
     }
 }
