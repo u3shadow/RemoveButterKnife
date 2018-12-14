@@ -6,6 +6,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.u3.codegenerator.FindViewByIdWriter;
 import com.u3.filechains.BaseChain;
+import com.u3.filechains.DeleteCodeChain;
 import com.u3.filechains.FindAPIUseChain;
 import com.u3.filechains.FindBindAnnotationChain;
 import com.u3.filechains.FindImportChain;
@@ -24,7 +25,7 @@ public class DeleteAction extends  WriteCommandAction.Simple{
     private PsiElementFactory mFactory;
     Document document;
     Map<String,String> nameAndIdMap = new LinkedHashMap<>();
-    BaseChain findAPIChain, findBindChain, findImportChain;
+    BaseChain findAPIChain, findBindChain, findImportChain,deleteChain;
 
     public DeleteAction(Project project, PsiFile file,Document document, PsiClass psiClass){
         super(project, file);
@@ -42,16 +43,11 @@ public class DeleteAction extends  WriteCommandAction.Simple{
             findImportChain = new FindImportChain();
             findBindChain = new FindBindAnnotationChain();
             findAPIChain = new FindAPIUseChain();
+            deleteChain = new DeleteCodeChain(document,project);
             findImportChain.setNext(findBindChain);
             findBindChain.setNext(findAPIChain);
+            findAPIChain.setNext(deleteChain);
             findImportChain.handle(currentDoc,deleteLineNumbers,nameAndIdMap);
-            for (int i = 0; i < deleteLineNumbers.size(); i++) {
-                int deleteStart = document.getLineStartOffset(deleteLineNumbers.get(i));
-                int deleteEnd = document.getLineEndOffset(deleteLineNumbers.get(i));
-                document.deleteString(deleteStart, deleteEnd);
-            }
-            PsiDocumentManager manager = PsiDocumentManager.getInstance(project);
-            manager.commitDocument(document);
             createFindViewByIdCode();
         }catch (Exception e){
             e.printStackTrace();

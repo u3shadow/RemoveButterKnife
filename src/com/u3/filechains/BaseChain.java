@@ -6,7 +6,7 @@ import java.util.Map;
 public abstract class BaseChain {
    protected BaseChain next;
    protected String[] currentDoc;
-   protected List deleteLineNumbers;
+   protected List<Integer> deleteLineNumbers;
    protected Map<String,String> nameAndIdMap;
    public void setNext(BaseChain next){
       this.next = next;
