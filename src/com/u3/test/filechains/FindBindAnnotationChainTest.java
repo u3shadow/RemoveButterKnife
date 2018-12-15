@@ -25,6 +25,16 @@ public class FindBindAnnotationChainTest extends BaseTest{
         int result = nameAndIdMap.size();
         assertEquals(expect,result);
     }
+     @Test
+    public void test_with_bind_R2_use() {
+        currentDoc = new String[2];
+        currentDoc[0] = "@BindView(R2.id.test)";
+        currentDoc[1] = "ImageView image";
+        chain.handle(currentDoc,deleteLineNumbers,nameAndIdMap);
+        int expect = 1;
+        int result = nameAndIdMap.size();
+        assertEquals(expect,result);
+    }
     @Test
     public void test_without_bind_use() {
         currentDoc = new String[2];
