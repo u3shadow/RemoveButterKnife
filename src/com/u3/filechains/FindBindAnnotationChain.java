@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class FindBindAnnotationChain extends BaseChain {
     @Override
     public void process() {
-        String pattern = "^@(BindView|InjectView|Bind)\\(R.id.*\\)$";
+        String pattern = "^@(BindView|InjectView|Bind)\\((R.id.*)|(R2.id.*)\\)$";
         Pattern r = Pattern.compile(pattern);
         for (int i = 0;i < currentDoc.length;i++){
             Matcher m = r.matcher(currentDoc[i].trim());

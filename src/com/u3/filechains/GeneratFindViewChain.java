@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GeneratCodeChain extends BaseChain {
+public class GeneratFindViewChain extends BaseChain {
     private List code;
 
-    public GeneratCodeChain(List code){
+    public GeneratFindViewChain(List code){
         this.code =  code;
     }
     @Override

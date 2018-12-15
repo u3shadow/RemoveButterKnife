@@ -10,7 +10,7 @@ import com.u3.filechains.DeleteCodeChain;
 import com.u3.filechains.FindAPIUseChain;
 import com.u3.filechains.FindBindAnnotationChain;
 import com.u3.filechains.FindImportChain;
-import com.u3.filechains.GeneratCodeChain;
+import com.u3.filechains.GeneratFindViewChain;
 
 import java.util.*;
 
@@ -44,7 +44,7 @@ public class DeleteAction extends  WriteCommandAction.Simple{
             findBindChain = new FindBindAnnotationChain();
             findAPIChain = new FindAPIUseChain();
             deleteChain = new DeleteCodeChain(document,project);
-            genCodeChain = new GeneratCodeChain(code);
+            genCodeChain = new GeneratFindViewChain(code);
             findImportChain.setNext(findBindChain);
             findBindChain.setNext(findAPIChain);
             findAPIChain.setNext(deleteChain);
