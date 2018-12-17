@@ -1,8 +1,7 @@
 package com.u3.test.filechains;
 
 import com.u3.filechains.BaseChain;
-import com.u3.filechains.FindAPIUseChain;
-import com.u3.filechains.FindBindAnnotationChain;
+import com.u3.filechains.FindBindChain;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +12,7 @@ public class FindBindAnnotationChainTest extends BaseTest{
     BaseChain chain;
     @Before
     public void initChain(){
-        chain = new FindBindAnnotationChain();
+        chain = new FindBindChain();
     }
     @Test
     public void test_with_bind_use() {

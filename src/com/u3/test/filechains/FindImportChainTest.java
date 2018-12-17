@@ -1,7 +1,6 @@
 package com.u3.test.filechains;
 
 import com.u3.filechains.BaseChain;
-import com.u3.filechains.FindBindAnnotationChain;
 import com.u3.filechains.FindImportChain;
 
 import org.junit.Before;

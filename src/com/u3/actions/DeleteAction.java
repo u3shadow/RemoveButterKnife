@@ -8,7 +8,7 @@ import com.u3.codegenerator.FindViewByIdWriter;
 import com.u3.filechains.BaseChain;
 import com.u3.filechains.DeleteCodeChain;
 import com.u3.filechains.FindAPIUseChain;
-import com.u3.filechains.FindBindAnnotationChain;
+import com.u3.filechains.FindBindChain;
 import com.u3.filechains.FindImportChain;
 import com.u3.filechains.GeneratFindViewChain;
 
@@ -41,7 +41,7 @@ public class DeleteAction extends  WriteCommandAction.Simple{
     @Override
     protected void run(){
             findImportChain = new FindImportChain();
-            findBindChain = new FindBindAnnotationChain();
+            findBindChain = new FindBindChain();
             findAPIChain = new FindAPIUseChain();
             deleteChain = new DeleteCodeChain(document,project);
             genCodeChain = new GeneratFindViewChain(code);
