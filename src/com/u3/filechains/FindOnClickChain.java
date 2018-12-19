@@ -1,6 +1,7 @@
 package com.u3.filechains;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -10,6 +11,9 @@ public class FindOnClickChain extends BaseChain {
     private static final int HAVE_ARG = 2;
     private static final int NO_ARG = 1;
     private Map<ClickMehtod, List<String>> methodAndIDMap;
+    private ClickMehtod method;
+    private List<String> ids;
+
     public FindOnClickChain(Map<ClickMehtod, List<String>> map){
         methodAndIDMap = map;
     }
@@ -21,45 +25,49 @@ public class FindOnClickChain extends BaseChain {
             Matcher m = r.matcher(currentDoc[i].trim());
             currentDoc[i] = currentDoc[i].trim();
             if (m.find()) {
-                ClickMehtod mehtod = getMethod(currentDoc[i+1]);
-                if (currentDoc[i].contains("{")){
-                    int curlyLeftIndex = currentDoc[i].indexOf("{");
-                    int curlyRightIndex = currentDoc[i].indexOf("}");
-                    String[] ids = currentDoc[i].substring(curlyLeftIndex+1,curlyRightIndex).split(",");
-                    updateMap(mehtod,ids);
-                }else{
-                  String id = currentDoc[i].substring(currentDoc[i].indexOf("(")+1,currentDoc[i].length()-1);
-                  updateMap(mehtod,id);
-                }
+                method = detectMethod(currentDoc[i+1]);
+                ids = detectID(currentDoc[i], method);
+                methodAndIDMap.put(method,ids);
                 deleteLineNumbers.add(i);
             }
         }
     }
 
-    private ClickMehtod getMethod(String s) {
+    private List<String> detectID(String s, ClickMehtod mehtod) {
+        List<String> idList;
+        if (s.contains("{")){
+            int curlyLeftIndex = s.indexOf("{");
+            int curlyRightIndex = s.indexOf("}");
+            String[] ids = s.substring(curlyLeftIndex+1,curlyRightIndex).split(",");
+            idList = Arrays.asList(ids);
+        }else{
+            String id = s.substring(s.indexOf("(")+1, s.length()-1);
+            idList = Arrays.asList(id);
+        }
+        return idList;
+    }
+
+    private ClickMehtod detectMethod(String s) {
         ClickMehtod method = new ClickMehtod();
         String[] elements = s.split(" ");
         for(String element:elements){
             if (element.contains("(")){
-                String[] nameAndArg = element.split("\\(");
-                if (nameAndArg.length == HAVE_ARG){
-                    method.setName(nameAndArg[0]);
-                    method.setArgType(nameAndArg[1]);
-                    method.setHaveArg(true);
-                }else if (nameAndArg.length == NO_ARG){
-                    method.setName(nameAndArg[0]);
-                    method.setHaveArg(false);
-                }
+                setMethod(element,method);
                 break;
             }
         }
         return method;
     }
-    private void updateMap(ClickMehtod method,String ...ids){
-        List<String> idList = new ArrayList<>();
-        for (String s:ids){
-            idList.add(s);
+
+    private void setMethod(String element,ClickMehtod method) {
+        String[] nameAndArg = element.split("\\(");
+        if (nameAndArg.length == HAVE_ARG&&!nameAndArg[1].equals(")")){
+            method.setName(nameAndArg[0]);
+            method.setArgType(nameAndArg[1]);
+            method.setHaveArg(true);
+        }else{
+            method.setName(nameAndArg[0]);
+            method.setHaveArg(false);
         }
-        methodAndIDMap.put(method,idList);
     }
 }
