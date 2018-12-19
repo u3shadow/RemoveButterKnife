@@ -1,7 +1,7 @@
 package com.u3.test.filechains;
 
 import com.u3.filechains.BaseChain;
-import com.u3.filechains.FindOnClickChain;
+import com.u3.filechains.DetectOnClickChain;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,13 +11,13 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class FindOnClickChainTest extends BaseTest{
+public class DetectOnClickChainTest extends BaseTest{
     BaseChain chain;
     Map map;
     @Before
     public void initChain(){
         map = new LinkedHashMap<>();
-        chain = new FindOnClickChain(map);
+        chain = new DetectOnClickChain(map);
     }
     @Test
     public void test_can_find_onclick(){

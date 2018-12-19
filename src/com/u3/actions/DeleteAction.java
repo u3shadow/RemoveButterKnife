@@ -7,9 +7,9 @@ import com.intellij.psi.*;
 import com.u3.codegenerator.FindViewByIdWriter;
 import com.u3.filechains.BaseChain;
 import com.u3.filechains.DeleteCodeChain;
-import com.u3.filechains.FindAPIUseChain;
-import com.u3.filechains.FindBindChain;
-import com.u3.filechains.FindImportChain;
+import com.u3.filechains.DetectAPIUseChain;
+import com.u3.filechains.DetectBindChain;
+import com.u3.filechains.DetectImportChain;
 import com.u3.filechains.GeneratFindViewChain;
 
 import java.util.*;
@@ -40,9 +40,9 @@ public class DeleteAction extends  WriteCommandAction.Simple{
     }
     @Override
     protected void run(){
-            findImportChain = new FindImportChain();
-            findBindChain = new FindBindChain();
-            findAPIChain = new FindAPIUseChain();
+            findImportChain = new DetectImportChain();
+            findBindChain = new DetectBindChain();
+            findAPIChain = new DetectAPIUseChain();
             deleteChain = new DeleteCodeChain(document,project);
             genCodeChain = new GeneratFindViewChain(code);
             findImportChain.setNext(findBindChain);

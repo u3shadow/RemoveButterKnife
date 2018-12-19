@@ -3,7 +3,7 @@ package com.u3.filechains;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FindBindChain extends BaseChain {
+public class DetectBindChain extends BaseChain {
     @Override
     public void process() {
         String pattern = "^@(BindView|InjectView|Bind)\\((R.id.*)|(R2.id.*)\\)$";

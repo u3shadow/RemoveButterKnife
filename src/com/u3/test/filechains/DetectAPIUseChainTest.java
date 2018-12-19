@@ -1,18 +1,18 @@
 package com.u3.test.filechains;
 
 import com.u3.filechains.BaseChain;
-import com.u3.filechains.FindAPIUseChain;
+import com.u3.filechains.DetectAPIUseChain;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class FindAPIUseChainTest extends BaseTest{
+public class DetectAPIUseChainTest extends BaseTest{
     BaseChain chain;
     @Before
     public void initChain(){
-        chain = new FindAPIUseChain();
+        chain = new DetectAPIUseChain();
     }
     @Test
     public void test_with_api_use() {

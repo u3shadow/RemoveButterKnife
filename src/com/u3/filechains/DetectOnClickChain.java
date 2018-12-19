@@ -7,14 +7,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FindOnClickChain extends BaseChain {
+public class DetectOnClickChain extends BaseChain {
     private static final int HAVE_ARG = 2;
     private static final int NO_ARG = 1;
     private Map<ClickMehtod, List<String>> methodAndIDMap;
     private ClickMehtod method;
     private List<String> ids;
 
-    public FindOnClickChain(Map<ClickMehtod, List<String>> map){
+    public DetectOnClickChain(Map<ClickMehtod, List<String>> map){
         methodAndIDMap = map;
     }
     @Override

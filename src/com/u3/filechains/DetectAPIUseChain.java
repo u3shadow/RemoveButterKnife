@@ -1,6 +1,6 @@
 package com.u3.filechains;
 
-public class FindAPIUseChain extends BaseChain{
+public class DetectAPIUseChain extends BaseChain{
 
     public static final String BUTTER_KNIFE = "ButterKnife";
 
