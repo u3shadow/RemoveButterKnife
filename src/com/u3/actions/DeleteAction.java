@@ -6,11 +6,9 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.u3.codegenerator.FindViewByIdWriter;
 import com.u3.filechains.BaseChain;
-import com.u3.filechains.DeleteCodeChain;
 import com.u3.filechains.DetectAPIUseChain;
 import com.u3.filechains.DetectBindChain;
 import com.u3.filechains.DetectImportChain;
-import com.u3.filechains.GeneratFindViewChain;
 
 import java.util.*;
 
@@ -43,15 +41,32 @@ public class DeleteAction extends  WriteCommandAction.Simple{
             findImportChain = new DetectImportChain();
             findBindChain = new DetectBindChain();
             findAPIChain = new DetectAPIUseChain();
-            deleteChain = new DeleteCodeChain(document,project);
-            genCodeChain = new GeneratFindViewChain(code);
             findImportChain.setNext(findBindChain);
             findBindChain.setNext(findAPIChain);
-            findAPIChain.setNext(deleteChain);
-            deleteChain.setNext(genCodeChain);
             findImportChain.handle(currentDoc,deleteLineNumbers,nameAndIdMap);
+            deleteCode();
+            genCode();
             createFindViewByIdCode();
     }
+
+    private void genCode() {
+          for (Map.Entry<String,String> entry:nameAndIdMap.entrySet()){
+            String codes;
+            codes = entry.getKey() + "findViewById("+entry.getValue()+");";
+            code.add(codes);
+        }
+    }
+
+    private void deleteCode() {
+        for (int i = 0; i < deleteLineNumbers.size(); i++) {
+            int deleteStart = document.getLineStartOffset(deleteLineNumbers.get(i));
+            int deleteEnd = document.getLineEndOffset(deleteLineNumbers.get(i));
+            document.deleteString(deleteStart, deleteEnd);
+        }
+        PsiDocumentManager manager = PsiDocumentManager.getInstance(project);
+        manager.commitDocument(document);
+    }
+
     private void createFindViewByIdCode(){
         try {
             new FindViewByIdWriter(project, file, mClass, code, mFactory).execute();
