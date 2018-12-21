@@ -4,5 +4,10 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElementFactory;
 
 public interface GenCodeStrategy {
-    void genCode(PsiClass mClass, PsiElementFactory mFactory);
+    default void genCode(PsiClass mClass, PsiElementFactory mFactory){
+        genFindView(mClass,mFactory);
+        genOnClick(mClass,mFactory);
+    }
+    void genFindView(PsiClass mClass, PsiElementFactory mFactory);
+    void genOnClick(PsiClass mClass, PsiElementFactory mFactory);
 }

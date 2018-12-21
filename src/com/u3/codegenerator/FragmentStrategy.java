@@ -13,7 +13,7 @@ class FragmentStrategy implements GenCodeStrategy{
         this.code = code;
     }
     @Override
-    public void genCode(PsiClass mClass, PsiElementFactory mFactory) {
+    public void genFindView(PsiClass mClass, PsiElementFactory mFactory) {
         PsiMethod onCreateView = mClass.findMethodsByName("onCreateView", false)[0];
         for (PsiStatement statement : onCreateView.getBody().getStatements()) {
             String returnValue = statement.getText();
@@ -31,5 +31,10 @@ class FragmentStrategy implements GenCodeStrategy{
                 break;
             }
         }
+    }
+
+    @Override
+    public void genOnClick(PsiClass mClass, PsiElementFactory mFactory) {
+
     }
 }

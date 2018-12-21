@@ -15,8 +15,8 @@ public class ActivityStrategy implements GenCodeStrategy{
         this.code = code;
     }
     @Override
-    public void genCode(PsiClass mClass, PsiElementFactory mFactory) {
-        try {
+    public void genFindView(PsiClass mClass, PsiElementFactory mFactory) {
+         try {
             PsiMethod onCreate = mClass.findMethodsByName("onCreate", false)[0];
             for (PsiStatement statement : onCreate.getBody().getStatements()) {
                 // Search for setContentView()
@@ -36,5 +36,10 @@ public class ActivityStrategy implements GenCodeStrategy{
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void genOnClick(PsiClass mClass, PsiElementFactory mFactory) {
+
     }
 }
