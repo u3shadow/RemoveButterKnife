@@ -16,12 +16,12 @@ import java.util.*;
  * Created by xiaolei on 2016/6/17.
  */
 public class DeleteAction extends  WriteCommandAction.Simple{
-    Project project;
-    PsiFile file;
-    String[] currentDoc;
-    PsiClass mClass;
+    private Project project;
+    private PsiFile file;
+    private String[] currentDoc;
+    private PsiClass mClass;
     private PsiElementFactory mFactory;
-    Document document;
+    private Document document;
     private Map<String,String> nameAndIdMap = new LinkedHashMap<>();
     private BaseChain findAPIChain, findBindChain, findImportChain,deleteChain,genCodeChain;
     private List code = new ArrayList();
@@ -49,14 +49,6 @@ public class DeleteAction extends  WriteCommandAction.Simple{
             createFindViewByIdCode();
     }
 
-    private void genCode() {
-          for (Map.Entry<String,String> entry:nameAndIdMap.entrySet()){
-            String codes;
-            codes = entry.getKey() + "findViewById("+entry.getValue()+");";
-            code.add(codes);
-        }
-    }
-
     private void deleteCode() {
         for (int i = 0; i < deleteLineNumbers.size(); i++) {
             int deleteStart = document.getLineStartOffset(deleteLineNumbers.get(i));
@@ -65,6 +57,14 @@ public class DeleteAction extends  WriteCommandAction.Simple{
         }
         PsiDocumentManager manager = PsiDocumentManager.getInstance(project);
         manager.commitDocument(document);
+    }
+
+    private void genCode() {
+          for (Map.Entry<String,String> entry:nameAndIdMap.entrySet()){
+            String codes;
+            codes = entry.getKey() + "findViewById("+entry.getValue()+");";
+            code.add(codes);
+        }
     }
 
     private void createFindViewByIdCode(){
