@@ -24,14 +24,10 @@ public class FindViewByIdWriter extends  WriteCommandAction.Simple {
 
     @Override
     protected void run(){
-        try {
             GenCodeContext codeContext = new GenCodeContext();
             codeContext.setStrategy(new ActivityStrategy(code));
             codeContext.executeStrategy(mClass,mFactory);
             codeContext.setStrategy(new FragmentStrategy(code));
             codeContext.executeStrategy(mClass,mFactory);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 }

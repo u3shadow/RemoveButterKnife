@@ -24,7 +24,6 @@ public class ActivityStrategy implements GenCodeStrategy{
                     PsiReferenceExpression methodExpression
                             = ((PsiMethodCallExpression) statement.getFirstChild())
                             .getMethodExpression();
-                    // Insert ButterKnife.inject()/ButterKnife.bind() after setContentView()
                     if (methodExpression.getText().equals("setContentView")) {
                         for (int i = code.size() - 1; i >= 0; i--) {
                             onCreate.getBody().addAfter(mFactory.createStatementFromText(
