@@ -9,12 +9,12 @@ import java.util.List;
 /**
  * Created by xiaolei on 2016/6/17.
  */
-public class FindViewByIdWriter extends  WriteCommandAction.Simple {
+public class AndroidCodeWriter extends  WriteCommandAction.Simple {
     PsiClass mClass;
     private PsiElementFactory mFactory;
     List<String> code;
     Project mProject;
-    public FindViewByIdWriter(Project project, PsiFile file, PsiClass psiClass, List<String> code, PsiElementFactory mFactory) {
+    public AndroidCodeWriter(Project project, PsiFile file, PsiClass psiClass, List<String> code, PsiElementFactory mFactory) {
         super(project, file);
         mClass = psiClass;
         this.code = code;
@@ -28,6 +28,8 @@ public class FindViewByIdWriter extends  WriteCommandAction.Simple {
             codeContext.setStrategy(new ActivityStrategy(code));
             codeContext.executeStrategy(mClass,mFactory);
             codeContext.setStrategy(new FragmentStrategy(code));
+            codeContext.executeStrategy(mClass,mFactory);
+            codeContext.setStrategy(new CustomViewStrategy(code));
             codeContext.executeStrategy(mClass,mFactory);
     }
 }

@@ -4,7 +4,7 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
-import com.u3.codegenerator.FindViewByIdWriter;
+import com.u3.codegenerator.AndroidCodeWriter;
 import com.u3.filechains.BaseChain;
 import com.u3.filechains.DetectAPIUseChain;
 import com.u3.filechains.DetectBindChain;
@@ -69,7 +69,7 @@ public class DeleteAction extends  WriteCommandAction.Simple{
 
     private void createFindViewByIdCode(){
         try {
-            new FindViewByIdWriter(project, file, mClass, code, mFactory).execute();
+            new AndroidCodeWriter(project, file, mClass, code, mFactory).execute();
         }catch (Exception e){
             e.printStackTrace();
         }
