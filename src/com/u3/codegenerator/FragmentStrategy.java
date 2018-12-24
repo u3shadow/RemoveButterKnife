@@ -19,15 +19,7 @@ class FragmentStrategy implements GenCodeStrategy{
             String returnValue = statement.getText();
             if (returnValue.contains("R.layout")||returnValue.contains("LayoutInflater.from")) {
                 String viewName = returnValue.trim().split(" ")[1]+".";
-                for (int i = code.size() - 1; i >= 0; i--) {
-                    StringBuffer buffer = new StringBuffer(code.get(i));
-                    int num = buffer.indexOf(")");
-                    buffer.insert(num+1,viewName);
-                    try {
-                        statement.addAfter(mFactory.createStatementFromText(
-                                buffer.toString(), mClass), statement);
-                    }catch (Exception e1){}
-                }
+                insertCode(mClass,mFactory,statement,code);
                 break;
             }
         }

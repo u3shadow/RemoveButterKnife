@@ -25,10 +25,7 @@ public class ActivityStrategy implements GenCodeStrategy{
                             = ((PsiMethodCallExpression) statement.getFirstChild())
                             .getMethodExpression();
                     if (methodExpression.getText().equals("setContentView")) {
-                        for (int i = code.size() - 1; i >= 0; i--) {
-                            onCreate.getBody().addAfter(mFactory.createStatementFromText(
-                                    code.get(i) + "\n", mClass), statement);
-                        }
+                       insertCode(mClass,mFactory,statement,code);
                         break;
                     }
                 }

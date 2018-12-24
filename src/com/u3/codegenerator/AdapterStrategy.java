@@ -32,14 +32,7 @@ class AdapterStrategy implements GenCodeStrategy{
                                     stringBuilder.insert(s.indexOf("find"),viewName+".");
                                     codes.add(stringBuilder.toString());
                                 }
-                                for (int i = code.size() - 1; i >= 0; i--) {
-                                    StringBuffer buffer = new StringBuffer(codes.get(i));
-                                    try {
-                                        statement.addAfter(mFactory.createStatementFromText(
-                                                buffer.toString(), mClass), statement);
-                                    } catch (Exception e1) {
-                                    }
-                                }
+                                insertCode(mClass,mFactory,statement,codes);
                                 break;
                             }
                         }
