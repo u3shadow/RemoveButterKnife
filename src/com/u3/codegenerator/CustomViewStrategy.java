@@ -19,7 +19,7 @@ public class CustomViewStrategy implements GenCodeStrategy{
             for (PsiStatement statement : method.getBody().getStatements()) {
                 String returnValue = statement.getText();
                 if (returnValue.contains("R.layout") || returnValue.contains("LayoutInflater.from(context).inflate")) {
-                    for (int i = 0; i < code.size(); i++) {
+                    for (int i = code.size() - 1; i >= 0; i--) {
                         StringBuffer buffer = new StringBuffer(code.get(i));
                         try {
                             statement.addAfter(mFactory.createStatementFromText(

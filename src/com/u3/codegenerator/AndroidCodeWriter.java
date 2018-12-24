@@ -3,6 +3,7 @@ package com.u3.codegenerator;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
+import com.intellij.psi.search.EverythingGlobalScope;
 
 import java.util.List;
 
@@ -24,12 +25,17 @@ public class AndroidCodeWriter extends  WriteCommandAction.Simple {
 
     @Override
     protected void run(){
-            GenCodeContext codeContext = new GenCodeContext();
-            codeContext.setStrategy(new ActivityStrategy(code));
-            codeContext.executeStrategy(mClass,mFactory);
-            codeContext.setStrategy(new FragmentStrategy(code));
-            codeContext.executeStrategy(mClass,mFactory);
-            codeContext.setStrategy(new CustomViewStrategy(code));
-            codeContext.executeStrategy(mClass,mFactory);
+        GenCodeContext codeContext = new GenCodeContext();
+        String type = mClass.getSuperClassType().toString();
+            if (type.contains("Activity")){
+                codeContext.setStrategy(new ActivityStrategy(code));
+            }else if (type.contains("Fragment")) {
+                codeContext.setStrategy(new FragmentStrategy(code));
+            }else if (type.contains("ViewHolder")||type.contains("Adapter<ViewHolder>")) {
+                codeContext.setStrategy(new AdapterStrategy(code));
+            }else {
+                codeContext.setStrategy(new CustomViewStrategy(code));
+            }
+            codeContext.executeStrategy(mClass, mFactory);
     }
 }
