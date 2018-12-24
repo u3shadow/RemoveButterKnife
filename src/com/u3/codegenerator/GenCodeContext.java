@@ -5,12 +5,16 @@ import com.intellij.psi.PsiElementFactory;
 
 public class GenCodeContext {
     private GenCodeStrategy strategy;
-    public GenCodeContext(){
+    PsiClass mClass;
+    PsiElementFactory mFactory;
+    public GenCodeContext(PsiClass mClass, PsiElementFactory mFactory){
+        this.mClass = mClass;
+        this.mFactory = mFactory;
     }
     public void setStrategy(GenCodeStrategy strategy){
         this.strategy = strategy;
     }
-    public void executeStrategy(PsiClass mClass, PsiElementFactory mFactory){
+    public void executeStrategy(){
         strategy.genCode(mClass,mFactory);
     }
 }

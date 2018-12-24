@@ -22,6 +22,7 @@ public interface GenCodeStrategy {
                 statement.addAfter(mFactory.createStatementFromText(
                         buffer.toString(), mClass), statement);
             } catch (Exception e1) {
+                e1.printStackTrace();
             }
         }
     }

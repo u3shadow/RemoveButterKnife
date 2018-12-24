@@ -16,30 +16,48 @@ class AdapterStrategy implements GenCodeStrategy{
     }
     @Override
     public void genFindView(PsiClass mClass, PsiElementFactory mFactory) {
-        PsiMethod[] methods = mClass.getAllMethods();
+        PsiMethod method = findMethod(mClass);
+        String viewName = findViewName(method);
+        for (PsiStatement statement : method.getBody().getStatements()) {
+            String returnValue = statement.getText();
+            if (returnValue.contains("super(" + viewName + ")")) {
+                List<String> codes = addViewName(viewName);
+                insertCode(mClass,mFactory,statement,codes);
+                break;
+            }
+        }
+    }
+    private PsiMethod findMethod(PsiClass mClass){
+       PsiMethod[] methods = mClass.getAllMethods();
+       PsiMethod result = null;
         for (PsiMethod method:methods) {
-            if (method.getParameterList().getParameters().length == 1) {
                 for (PsiParameter parameter : method.getParameterList().getParameters()) {
                     String type = parameter.getType().toString();
                     if (type != null && type.equals("PsiType:View")) {
-                        String viewName = parameter.getName();
-                        for (PsiStatement statement : method.getBody().getStatements()) {
-                            String returnValue = statement.getText();
-                            if (returnValue.contains("super(" + viewName + ")")) {
-                                List<String> codes = new ArrayList<>();
-                                for (String s : code) {
-                                    StringBuilder stringBuilder = new StringBuilder(s);
-                                    stringBuilder.insert(s.indexOf("find"),viewName+".");
-                                    codes.add(stringBuilder.toString());
-                                }
-                                insertCode(mClass,mFactory,statement,codes);
-                                break;
-                            }
-                        }
+                      result =  method;
+                      break;
                     }
                 }
+        }
+        return result;
+    }
+    private String findViewName(PsiMethod method){
+        String result = "";
+        for (PsiParameter parameter:method.getParameterList().getParameters()){
+            if (parameter.getType().toString().equals("PsiType:View")){
+                result = parameter.getName();
             }
         }
+        return  result;
+    }
+    private List<String> addViewName(String viewName) {
+        List<String> codes = new ArrayList<>();
+        for (String s : code) {
+            StringBuilder stringBuilder = new StringBuilder(s);
+            stringBuilder.insert(s.indexOf("find"),viewName+".");
+            codes.add(stringBuilder.toString());
+        }
+        return codes;
     }
 
     @Override

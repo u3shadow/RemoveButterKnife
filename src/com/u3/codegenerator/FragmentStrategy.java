@@ -18,7 +18,6 @@ class FragmentStrategy implements GenCodeStrategy{
         for (PsiStatement statement : onCreateView.getBody().getStatements()) {
             String returnValue = statement.getText();
             if (returnValue.contains("R.layout")||returnValue.contains("LayoutInflater.from")) {
-                String viewName = returnValue.trim().split(" ")[1]+".";
                 insertCode(mClass,mFactory,statement,code);
                 break;
             }

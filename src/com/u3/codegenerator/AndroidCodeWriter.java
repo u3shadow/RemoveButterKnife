@@ -25,7 +25,7 @@ public class AndroidCodeWriter extends  WriteCommandAction.Simple {
 
     @Override
     protected void run(){
-        GenCodeContext codeContext = new GenCodeContext();
+        GenCodeContext codeContext = new GenCodeContext(mClass, mFactory);
         String type = mClass.getSuperClassType().toString();
             if (type.contains("Activity")){
                 codeContext.setStrategy(new ActivityStrategy(code));
@@ -36,6 +36,6 @@ public class AndroidCodeWriter extends  WriteCommandAction.Simple {
             }else {
                 codeContext.setStrategy(new CustomViewStrategy(code));
             }
-            codeContext.executeStrategy(mClass, mFactory);
+            codeContext.executeStrategy();
     }
 }
