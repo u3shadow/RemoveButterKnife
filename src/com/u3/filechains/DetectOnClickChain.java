@@ -61,7 +61,7 @@ public class DetectOnClickChain extends BaseChain {
 
     private void setMethod(String element,ClickMehtod method) {
         String[] nameAndArg = element.split("\\(");
-        if (nameAndArg.length == HAVE_ARG&&!nameAndArg[1].equals(")")){
+        if (nameAndArg.length == HAVE_ARG&&(!nameAndArg[1].equals(")")&&!nameAndArg[1].equals("){"))){
             method.setName(nameAndArg[0]);
             method.setArgType(nameAndArg[1]);
             method.setHaveArg(true);
