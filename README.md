@@ -33,6 +33,4 @@ You can see this blog
 See the LICENSE file for license rights and limitations(GNU3.0)
 
 ## NextStep
-##### Use annotation processor and javapoet to rebuild
-##### Support onclick annotation
 ##### On the way
