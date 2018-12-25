@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.u3coding.removebutterknife</id>
   <name>RemoveButterKnife</name>
-  <version>2.0.0bate</version>
+  <version>2.0.0</version>
   <vendor email="u3coding@gmail.com" url="about:blank">u3coding</vendor>
 
   <description>
@@ -32,7 +32,11 @@
     <![CDATA[
     <html>
    <h1>What's new</h1>
-   <br>Can keep the view order after remove butterknife.</br>
+   <br>support onclick annotation remove</br>
+   <br>support R2.id.xxxx</br>
+   <br>support customview</br>
+   <br>support recyclerviewholder</br>
+   <br>refactor code</br>
     </html>
      ]]>
   </change-notes>
