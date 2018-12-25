@@ -5,27 +5,36 @@ import com.intellij.psi.PsiElementFactory;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiParameter;
 import com.intellij.psi.PsiStatement;
+import com.u3.filechains.ClickMehtod;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-class AdapterStrategy implements GenCodeStrategy{
-    private List<String> code;
-    public AdapterStrategy(List<String> code){
-        this.code = code;
+class AdapterStrategy extends GenCodeStrategy{
+            PsiMethod method;
+         String viewName;
+    public AdapterStrategy(List<String> code, Map<ClickMehtod,List<String>> clickMap){
+        super(code,clickMap);
     }
     @Override
     public void genFindView(PsiClass mClass, PsiElementFactory mFactory) {
-        PsiMethod method = findMethod(mClass);
-        String viewName = findViewName(method);
+        method = findMethod(mClass);
+        viewName = findViewName(method);
+        List<String> codes = addViewName(viewName);
+        PsiStatement statement = findSuperStatement(method,viewName);
+        insertFindViewCode(mClass,mFactory,statement,codes);
+    }
+    private PsiStatement findSuperStatement(PsiMethod method,String viewName){
+        PsiStatement result = null;
         for (PsiStatement statement : method.getBody().getStatements()) {
             String returnValue = statement.getText();
             if (returnValue.contains("super(" + viewName + ")")) {
-                List<String> codes = addViewName(viewName);
-                insertFindViewCode(mClass,mFactory,statement,codes);
+                result = statement;
                 break;
             }
         }
+        return result;
     }
     private PsiMethod findMethod(PsiClass mClass){
        PsiMethod[] methods = mClass.getAllMethods();
@@ -62,6 +71,15 @@ class AdapterStrategy implements GenCodeStrategy{
 
     @Override
     public void genOnClick(PsiClass mClass, PsiElementFactory mFactory) {
-
+        method = findMethod(mClass);
+        viewName = findViewName(method);
+        PsiStatement statement = findSuperStatement(method,viewName);
+        for (ClickMehtod method:clickMap.keySet()){
+            StringBuilder methodString = getMethodInvokeString(method);
+            for(String id:clickMap.get(method)){
+                String code = getOnClickCode(methodString, id);
+                insertOnclickCode(mClass, mFactory, statement, code);
+            }
+        }
     }
 }
