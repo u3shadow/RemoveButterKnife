@@ -30,7 +30,6 @@ public class MainAction extends BaseGenerateAction {
 
     @Override
     public void actionPerformed(AnActionEvent event) {
-        // TODO: insert action logic here
         try {
         project = event.getData(PlatformDataKeys.PROJECT);
         Editor editor = event.getData(PlatformDataKeys.EDITOR);

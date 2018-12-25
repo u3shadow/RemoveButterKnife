@@ -6,9 +6,11 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.u3.codegenerator.AndroidCodeWriter;
 import com.u3.filechains.BaseChain;
+import com.u3.filechains.ClickMehtod;
 import com.u3.filechains.DetectAPIUseChain;
 import com.u3.filechains.DetectBindChain;
 import com.u3.filechains.DetectImportChain;
+import com.u3.filechains.DetectOnClickChain;
 
 import java.util.*;
 
@@ -23,7 +25,8 @@ public class DeleteAction extends  WriteCommandAction.Simple{
     private PsiElementFactory mFactory;
     private Document document;
     private Map<String,String> nameAndIdMap = new LinkedHashMap<>();
-    private BaseChain findAPIChain, findBindChain, findImportChain,deleteChain,genCodeChain;
+    private Map<ClickMehtod,List<String>> clickMap = new LinkedHashMap<>();
+    private BaseChain findAPIChain, findBindChain, findImportChain,findClickChain;
     private List code = new ArrayList();
     private List<Integer> deleteLineNumbers = new ArrayList<>();
 
@@ -41,8 +44,10 @@ public class DeleteAction extends  WriteCommandAction.Simple{
             findImportChain = new DetectImportChain();
             findBindChain = new DetectBindChain();
             findAPIChain = new DetectAPIUseChain();
+            findClickChain = new DetectOnClickChain(clickMap);
             findImportChain.setNext(findBindChain);
             findBindChain.setNext(findAPIChain);
+            findAPIChain.setNext(findClickChain);
             findImportChain.handle(currentDoc,deleteLineNumbers,nameAndIdMap);
             deleteCode();
             genCode();
@@ -69,7 +74,7 @@ public class DeleteAction extends  WriteCommandAction.Simple{
 
     private void createFindViewByIdCode(){
         try {
-            new AndroidCodeWriter(project, file, mClass, code, mFactory).execute();
+            new AndroidCodeWriter(project, file, mClass, code, mFactory,clickMap).execute();
         }catch (Exception e){
             e.printStackTrace();
         }
