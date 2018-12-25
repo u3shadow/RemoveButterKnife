@@ -22,7 +22,7 @@ class AdapterStrategy implements GenCodeStrategy{
             String returnValue = statement.getText();
             if (returnValue.contains("super(" + viewName + ")")) {
                 List<String> codes = addViewName(viewName);
-                insertCode(mClass,mFactory,statement,codes);
+                insertFindViewCode(mClass,mFactory,statement,codes);
                 break;
             }
         }

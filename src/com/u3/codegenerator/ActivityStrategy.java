@@ -16,20 +16,25 @@ public class ActivityStrategy implements GenCodeStrategy{
     }
     @Override
     public void genFindView(PsiClass mClass, PsiElementFactory mFactory) {
-            PsiMethod onCreate = mClass.findMethodsByName("onCreate", false)[0];
+        PsiStatement statement = findSetContentView(mClass);
+                       insertFindViewCode(mClass,mFactory,statement,code);
+    }
+    private PsiStatement findSetContentView(PsiClass mClass){
+        PsiStatement result = null;
+         PsiMethod onCreate = mClass.findMethodsByName("onCreate", false)[0];
             for (PsiStatement statement : onCreate.getBody().getStatements()) {
                 if (statement.getFirstChild() instanceof PsiMethodCallExpression) {
                     PsiReferenceExpression methodExpression
                             = ((PsiMethodCallExpression) statement.getFirstChild())
                             .getMethodExpression();
                     if (methodExpression.getText().equals("setContentView")) {
-                       insertCode(mClass,mFactory,statement,code);
+                        result = statement;
                         break;
                     }
                 }
             }
+            return result;
     }
-
     @Override
     public void genOnClick(PsiClass mClass, PsiElementFactory mFactory) {
 

@@ -14,16 +14,22 @@ public class CustomViewStrategy implements GenCodeStrategy{
     }
     @Override
     public void genFindView(PsiClass mClass, PsiElementFactory mFactory) {
+         PsiStatement statement = findInflateStatement(mClass);
+         insertFindViewCode(mClass, mFactory, statement,code);
+    }
+    private PsiStatement findInflateStatement(PsiClass mClass){
+        PsiStatement result = null;
         PsiMethod[] methods = mClass.getAllMethods();
         for (PsiMethod method:methods) {
             for (PsiStatement statement : method.getBody().getStatements()) {
                 String returnValue = statement.getText();
                 if (returnValue.contains("R.layout") || returnValue.contains("LayoutInflater.from(context).inflate")) {
-                    insertCode(mClass, mFactory, statement,code);
+                    result = statement;
                     break;
                 }
             }
         }
+        return result;
     }
 
     @Override

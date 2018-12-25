@@ -15,7 +15,7 @@ public interface GenCodeStrategy {
             e.printStackTrace();
         }
     }
-    default void insertCode(PsiClass mClass, PsiElementFactory mFactory, PsiStatement statement, List<String> code) {
+    default void insertFindViewCode(PsiClass mClass, PsiElementFactory mFactory, PsiStatement statement, List<String> code) {
         for (int i = code.size() - 1; i >= 0; i--) {
             StringBuffer buffer = new StringBuffer(code.get(i));
             try {
