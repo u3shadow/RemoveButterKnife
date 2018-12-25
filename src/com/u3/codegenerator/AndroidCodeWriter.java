@@ -18,13 +18,17 @@ public class AndroidCodeWriter extends  WriteCommandAction.Simple {
     List<String> code;
     Map<ClickMehtod,List<String>> clickMap;
     Project mProject;
-    public AndroidCodeWriter(Project project, PsiFile file, PsiClass psiClass, List<String> code, PsiElementFactory mFactory, Map<ClickMehtod,List<String>> clickMap) {
+    public AndroidCodeWriter(Project project, PsiFile file) {
         super(project, file);
-        mClass = psiClass;
-        this.code = code;
-        this.mFactory = mFactory;
-        this.clickMap = clickMap;
         mProject = project;
+    }
+    public void setData( List<String> code,Map<ClickMehtod,List<String>> clickMap){
+        this.code = code;
+        this.clickMap = clickMap;
+    }
+    public void setEnvData(PsiClass psiClass, PsiElementFactory mFactory){
+        mClass = psiClass;
+        this.mFactory = mFactory;
     }
 
     @Override

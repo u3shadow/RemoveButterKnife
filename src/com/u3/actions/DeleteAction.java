@@ -45,13 +45,16 @@ public class DeleteAction extends  WriteCommandAction.Simple{
             findBindChain = new DetectBindChain();
             findAPIChain = new DetectAPIUseChain();
             findClickChain = new DetectOnClickChain(clickMap);
+
             findImportChain.setNext(findBindChain);
             findBindChain.setNext(findAPIChain);
             findAPIChain.setNext(findClickChain);
+
             findImportChain.handle(currentDoc,deleteLineNumbers,nameAndIdMap);
+
             deleteCode();
-            genCode();
-            createFindViewByIdCode();
+            genFindViewCode();
+            insertCodeToFile();
     }
 
     private void deleteCode() {
@@ -64,7 +67,7 @@ public class DeleteAction extends  WriteCommandAction.Simple{
         manager.commitDocument(document);
     }
 
-    private void genCode() {
+    private void genFindViewCode() {
           for (Map.Entry<String,String> entry:nameAndIdMap.entrySet()){
             String codes;
             codes = entry.getKey() + "findViewById("+entry.getValue()+");";
@@ -72,9 +75,12 @@ public class DeleteAction extends  WriteCommandAction.Simple{
         }
     }
 
-    private void createFindViewByIdCode(){
+    private void insertCodeToFile(){
         try {
-            new AndroidCodeWriter(project, file, mClass, code, mFactory,clickMap).execute();
+           AndroidCodeWriter codeWriter = new AndroidCodeWriter(project, file);
+           codeWriter.setEnvData(mClass,mFactory);
+           codeWriter.setData(code,clickMap);
+           codeWriter.execute();
         }catch (Exception e){
             e.printStackTrace();
         }
