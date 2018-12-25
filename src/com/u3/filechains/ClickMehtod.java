@@ -1,6 +1,6 @@
 package com.u3.filechains;
 
-class ClickMehtod {
+public class ClickMehtod {
     String name;
     String argType;
     boolean haveArg;
